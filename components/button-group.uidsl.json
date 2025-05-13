@@ -1,0 +1,28 @@
+{
+  "type": "container",
+  "props": {
+    "className": "flex gap-2"
+  },
+  "children": [
+    {
+      "type": "component",
+      "ref": "Button",
+      "import": "components/shadcn/button.uidsl.json",
+      "props": {
+        "text": "Accept",
+        "variant": "default",
+        "size": "md"
+      }
+    },
+    {
+      "type": "component",
+      "ref": "Button",
+      "import": "components/shadcn/button.uidsl.json",
+      "props": {
+        "text": "Decline",
+        "variant": "destructive",
+        "size": "md"
+      }
+    }
+  ]
+}

@@ -1,0 +1,137 @@
+{
+  "uidsl": "0.1.0",
+  "defaultLibrary": "TailwindCSS",
+  "components": {
+    "PrimaryButton": {
+      "type": "button",
+      "props": {
+        "className": "w-full bg-blue-600 text-white py-2 px-4 rounded font-semibold"
+      }
+    },
+    "SecondaryButton": {
+      "type": "button",
+      "props": {
+        "className": "w-full bg-gray-200 text-gray-800 py-2 px-4 rounded font-semibold"
+      }
+    },
+    "LinkButton": {
+      "type": "button",
+      "props": {
+        "className": "text-sm text-blue-500 underline bg-transparent px-2 py-1"
+      }
+    }
+  },
+  "screens": {
+    "Login": {
+      "route": "/login",
+      "title": "Login",
+      "layout": {
+        "type": "flex",
+        "direction": "column",
+        "align": "center",
+        "justify": "center",
+        "gap": "1rem"
+      },
+      "state": {
+        "formData": {
+          "email": "",
+          "password": ""
+        }
+      },
+      "components": [
+        {
+          "type": "text",
+          "props": {
+            "text": "\ud83c\udf1f MyApp",
+            "className": "text-3xl font-bold text-blue-600"
+          }
+        },
+        {
+          "type": "text",
+          "props": {
+            "text": "Login to your account",
+            "className": "text-xl font-semibold mb-4"
+          }
+        },
+        {
+          "type": "form",
+          "id": "loginForm",
+          "children": [
+            {
+              "type": "input",
+              "props": {
+                "label": "Email Address",
+                "type": "email",
+                "placeholder": "you@example.com",
+                "className": "mb-3"
+              },
+              "bind": "formData.email"
+            },
+            {
+              "type": "input",
+              "props": {
+                "label": "Password",
+                "type": "password",
+                "placeholder": "Enter your password",
+                "className": "mb-3"
+              },
+              "bind": "formData.password"
+            },
+            {
+              "type": "component",
+              "ref": "PrimaryButton",
+              "props": {
+                "text": "Login",
+                "className": "mb-2"
+              },
+              "events": {
+                "onClick": {
+                  "action": "submit",
+                  "target": "loginForm"
+                }
+              }
+            },
+            {
+              "type": "component",
+              "ref": "SecondaryButton",
+              "props": {
+                "text": "Sign Up"
+              },
+              "events": {
+                "onClick": {
+                  "action": "navigate",
+                  "target": "Signup"
+                }
+              }
+            },
+            {
+              "type": "component",
+              "ref": "LinkButton",
+              "props": {
+                "text": "Forgot Password?",
+                "className": "mt-2 text-center"
+              },
+              "events": {
+                "onClick": {
+                  "action": "navigate",
+                  "target": "ForgotPassword"
+                }
+              }
+            }
+          ],
+          "events": {
+            "onSubmit": {
+              "action": "apiCall",
+              "api": "loginUser",
+              "data": "formData",
+              "onSuccess": {
+                "action": "navigate",
+                "target": "Dashboard"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

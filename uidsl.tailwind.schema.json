@@ -1,0 +1,279 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "UiDSL Specification",
+  "version": "0.1.0",
+  "description": "UiDSL is a domain-specific language for defining user interfaces in a declarative manner. This schema defines the structure and constraints of a UiDSL document.",
+  "type": "object",
+  "required": [
+    "uidsl",
+    "screens"
+  ],
+  "properties": {
+    "uidsl": {
+      "type": "string"
+    },
+    "info": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "defaultLibrary": {
+      "type": "string",
+      "enum": [
+        "TailwindCSS"
+      ],
+      "default": "TailwindCSS",
+      "description": "The only supported UI framework is TailwindCSS. This informs className usage for styling."
+    },
+    "screens": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "route": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "layout": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "flex",
+                  "grid"
+                ]
+              },
+              "direction": {
+                "type": "string"
+              },
+              "columns": {
+                "type": [
+                  "integer",
+                  "object"
+                ]
+              },
+              "gap": {
+                "type": "string"
+              },
+              "justify": {
+                "type": "string"
+              },
+              "align": {
+                "type": "string"
+              },
+              "responsive": {
+                "type": "object"
+              }
+            },
+            "additionalProperties": true
+          },
+          "state": {
+            "type": "object"
+          },
+          "components": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/component"
+            }
+          },
+          "events": {
+            "$ref": "#/definitions/events"
+          }
+        },
+        "required": [
+          "components"
+        ]
+      }
+    },
+    "components": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/component"
+      }
+    }
+  },
+  "definitions": {
+    "component": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "Type of the component. Use 'component' for referencing reusable components."
+        },
+        "id": {
+          "type": "string"
+        },
+        "props": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "bind": {
+          "type": [
+            "string",
+            "object"
+          ]
+        },
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/component"
+          }
+        },
+        "columns": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "header": {
+                "type": "string"
+              },
+              "field": {
+                "type": "string"
+              },
+              "format": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "header",
+              "field"
+            ]
+          }
+        },
+        "dataSource": {
+          "type": "object",
+          "properties": {
+            "api": {
+              "type": [
+                "string",
+                "object"
+              ]
+            },
+            "params": {
+              "type": "object"
+            },
+            "fetchOnLoad": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        },
+        "events": {
+          "$ref": "#/definitions/events"
+        },
+        "className": {
+          "type": "string",
+          "description": "TailwindCSS classes applied to this component"
+        },
+        "style": {
+          "type": "object",
+          "description": "Optional inline styles as a fallback"
+        },
+        "ref": {
+          "type": "string",
+          "description": "Reference to a component defined in the top-level `components` object"
+        },
+        "import": {
+          "type": "string",
+          "description": "Path to an external UiDSL component file to import and extend"
+        },
+        "styleConfig": {
+          "type": "object",
+          "description": "Mapping of prop values (like variant, size) to classNames or style tokens",
+          "properties": {
+            "variant": {
+              "type": "object",
+              "description": "Maps variant values to Tailwind classes",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "size": {
+              "type": "object",
+              "description": "Maps size values to Tailwind classes",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          },
+          "additionalProperties": true
+        },
+        "$id": {
+          "type": "string",
+          "description": "Unique identifier for reusable component, used in `ref` lookup"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": true
+    },
+    "events": {
+      "type": "object",
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "$ref": "#/definitions/action"
+          },
+          {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/action"
+            }
+          }
+        ]
+      }
+    },
+    "action": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string"
+        },
+        "api": {
+          "type": [
+            "string",
+            "object"
+          ]
+        },
+        "target": {
+          "type": "string"
+        },
+        "key": {
+          "type": "string"
+        },
+        "value": {},
+        "data": {},
+        "params": {
+          "type": "object"
+        },
+        "stateTarget": {
+          "type": "string"
+        },
+        "onSuccess": {
+          "$ref": "#/definitions/action"
+        },
+        "onError": {
+          "$ref": "#/definitions/action"
+        }
+      },
+      "required": [
+        "action"
+      ],
+      "additionalProperties": true
+    }
+  }
+}
