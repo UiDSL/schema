@@ -10,10 +10,12 @@
   ],
   "properties": {
     "uidsl": {
-      "type": "string"
+      "type": "string",
+      "description": "Version of UiDSL Schema to be used"
     },
     "info": {
       "type": "object",
+      "description": "Info about the desig itself",
       "properties": {
         "title": {
           "type": "string"
@@ -26,14 +28,6 @@
         }
       },
       "additionalProperties": true
-    },
-    "defaultLibrary": {
-      "type": "string",
-      "enum": [
-        "TailwindCSS"
-      ],
-      "default": "TailwindCSS",
-      "description": "The only supported UI framework is TailwindCSS. This informs className usage for styling."
     },
     "screens": {
       "type": "object",
@@ -111,7 +105,7 @@
       "properties": {
         "type": {
           "type": "string",
-          "description": "Type of the component. Use 'component' for referencing reusable components."
+          "description": "Type of the component. Use 'component' for referencing reusable components. Generators interpret 'container' as platform-specific block, e.g., 'div' in web, 'View' in React Native."
         },
         "id": {
           "type": "string"
