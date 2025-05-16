@@ -28,7 +28,7 @@ UiDSL is **not** just a verbose version of HTML — it is a **platform-agnostic 
 - Cross-platform generation (React, React Native, Flutter, etc.)
 - Declarative bindings to data, state, and events
 - Reusable components and schema-driven definitions
-- Generator-based output using tailored primitives like `container`, `text`, `form`, etc.
+- Generator-based output using tailored primitives like `container`, `text`, `input`, etc.
 
 ### Example Translation of `container`
 | Platform      | Output           |
@@ -39,6 +39,35 @@ UiDSL is **not** just a verbose version of HTML — it is a **platform-agnostic 
 
 This makes it ideal for design systems, prototyping tools, or AI agents that need to define UI once and target multiple runtimes.
 
+### 🔍 How Are Primitives Decided?
+UiDSL includes a small set of **core primitives** that are:
+- Universally supported across platforms (e.g., web, native, mobile)
+- Atomic in nature (cannot be decomposed further within the schema)
+- Interpretable directly by all generators
+
+Examples include: `text`, `input`, `button`, `switch`, etc.
+
+More complex or composed elements (like `card`, `form`, `modal`, `tabs`) should be defined as **custom components** instead.
+
+📬 **Want to propose a new primitive?** Open a [discussion](https://github.com/your-repo/discussions) and share your use case. We're open to feedback!
+
+### ✅ Supported Primitives and Platform Mappings
+| Primitive   | Web (React) | React Native      |
+|-------------|-------------|-------------------|
+| `container` | `<div>`     | `<View>`          |
+| `text`      | `<span>`    | `<Text>`          |
+| `image`     | `<img>`     | `<Image>`         |
+| `input`     | `<input>`   | `<TextInput>`     |
+| `button`    | `<button>`  | `<TouchableOpacity>` or `<Button>` |
+| `label`     | `<label>`   | `<Text>`          |
+| `icon`      | `<svg>` / `<i>` | icon component from lib |
+| `checkbox`  | `<input type="checkbox">` | `<CheckBox>` (or custom) |
+| `radio`     | `<input type="radio">`    | `<RadioButton>` (or custom) |
+| `select`    | `<select>`  | `<Picker>` (or custom) |
+| `switch`    | Styled checkbox or custom switch | `<Switch>`          |
+
+📬 **Want to propose a new primitive?** Open a [discussion](https://github.com/your-repo/discussions) and share your use case. We're open to feedback!
+
 ### Notable Capabilities
 | Feature                   | HTML | UiDSL |
 |---------------------------|------|-------|
@@ -47,7 +76,6 @@ This makes it ideal for design systems, prototyping tools, or AI agents that nee
 | Declarative events        | ❌   | ✅    |
 | Component reuse (`ref`)   | ❌   | ✅    |
 | Generator extensibility   | ❌   | ✅    |
-
 
 ## 📦 Features
 
@@ -58,7 +86,6 @@ This makes it ideal for design systems, prototyping tools, or AI agents that nee
 - 📱 **Compatible with Web & React Native + NativeWind**
 - 🧠 **Declarative events, navigation, and API calls**
 - 💎 **Extensible for future template support (ShadCN, Gluestack UI, etc.)**
-
 
 ## 📁 Repository Structure
 
@@ -102,11 +129,9 @@ We're planning to release **optional UiDSL component templates** for popular UI 
 
 Templates will include reusable component definitions that plug into `components` section of your spec.
 
-
 ## 🧪 Example
 
 Checkout [`examples`](./examples/) directory.
-
 
 ## 📖 Documentation (*coming soon*)
 

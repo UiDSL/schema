@@ -105,7 +105,21 @@
       "properties": {
         "type": {
           "type": "string",
-          "description": "Type of the component. Use 'component' for referencing reusable components. Generators interpret 'container' as platform-specific block, e.g., 'div' in web, 'View' in React Native."
+          "description": "Type of the component. Use predefined primitives or 'component' for referencing reusable components.",
+          "enum": [
+            "component",
+            "container",
+            "text",
+            "image",
+            "input",
+            "button",
+            "label",
+            "icon",
+            "checkbox",
+            "radio",
+            "select",
+            "switch"
+          ]
         },
         "id": {
           "type": "string"
