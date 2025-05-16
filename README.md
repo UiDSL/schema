@@ -2,7 +2,6 @@
 
 A declarative, extensible JSON-based schema to define screen-by-screen UI layouts directly from OpenAPI specs — tightly coupled with **TailwindCSS** for seamless, styled UI generation on **web and native** platforms.
 
-
 > [!CAUTION]
 >
 > UiDSL is currently in **pre-alpha**. We are actively developing the specification and tools to make it mature enough for real-world prototyping. At this stage, UiDSL is **not ready for full-scale production apps**. Expect breaking changes, incomplete features, and evolving APIs as we work toward a stable release.
@@ -22,6 +21,34 @@ This lets teams build interfaces that are consistent, maintainable, and tightly 
 
 ---
 
+## 🧠 Why UiDSL Instead of HTML?
+
+UiDSL is **not** just a verbose version of HTML — it is a **platform-agnostic UI abstraction layer** designed for:
+
+- Cross-platform generation (React, React Native, Flutter, etc.)
+- Declarative bindings to data, state, and events
+- Reusable components and schema-driven definitions
+- Generator-based output using tailored primitives like `container`, `text`, `form`, etc.
+
+### Example Translation of `container`
+| Platform      | Output           |
+|---------------|------------------|
+| Web (React)   | `<div>`          |
+| React Native  | `<View>`         |
+| Flutter       | `Container()`    |
+
+This makes it ideal for design systems, prototyping tools, or AI agents that need to define UI once and target multiple runtimes.
+
+### Notable Capabilities
+| Feature                   | HTML | UiDSL |
+|---------------------------|------|-------|
+| Platform-agnostic         | ❌   | ✅    |
+| Dynamic data binding      | ❌   | ✅    |
+| Declarative events        | ❌   | ✅    |
+| Component reuse (`ref`)   | ❌   | ✅    |
+| Generator extensibility   | ❌   | ✅    |
+
+
 ## 📦 Features
 
 - 🔧 **Screen-by-screen UI descriptions**
@@ -32,7 +59,6 @@ This lets teams build interfaces that are consistent, maintainable, and tightly 
 - 🧠 **Declarative events, navigation, and API calls**
 - 💎 **Extensible for future template support (ShadCN, Gluestack UI, etc.)**
 
----
 
 ## 📁 Repository Structure
 
@@ -44,8 +70,6 @@ This lets teams build interfaces that are consistent, maintainable, and tightly 
 ├── generators/                    # Code generators (JSX/Tailwind, CLI, etc.)
 └── README.md                      # You are here
 ```
-
----
 
 ## 🔨 Getting Started
 
@@ -67,8 +91,6 @@ ajv validate -s uidsl.tailwind.schema.json -d your-ui-spec.json
 node generators/jsx-from-uidsl.js your-ui-spec.json
 ```
 
----
-
 ## 🧱 Planned: Prebuilt Component Templates
 
 We're planning to release **optional UiDSL component templates** for popular UI libraries, so you don’t have to define low-level component structures manually:
@@ -80,84 +102,17 @@ We're planning to release **optional UiDSL component templates** for popular UI 
 
 Templates will include reusable component definitions that plug into `components` section of your spec.
 
----
 
 ## 🧪 Example
 
-```json
-{
-  "uidsl": "1.0.0",
-  "defaultLibrary": "TailwindCSS",
-  "screens": {
-    "Login": {
-      "route": "/login",
-      "state": {
-        "formData": {
-          "username": "",
-          "password": ""
-        }
-      },
-      "components": [
-        {
-          "type": "form",
-          "children": [
-            {
-              "type": "input",
-              "bind": "formData.username",
-              "props": {
-                "label": "Username",
-                "className": "mb-2"
-              }
-            },
-            {
-              "type": "input",
-              "bind": "formData.password",
-              "props": {
-                "label": "Password",
-                "type": "password"
-              }
-            },
-            {
-              "type": "button",
-              "props": {
-                "text": "Login",
-                "className": "bg-blue-500 text-white"
-              },
-              "events": {
-                "onClick": {
-                  "action": "submit",
-                  "target": "loginForm"
-                }
-              }
-            }
-          ],
-          "events": {
-            "onSubmit": {
-              "action": "apiCall",
-              "api": "loginUser",
-              "data": "formData",
-              "onSuccess": {
-                "action": "navigate",
-                "target": "Dashboard"
-              }
-            }
-          }
-        }
-      ]
-    }
-  }
-}
-```
+Checkout [`examples`](./examples/) directory.
 
----
 
-## 📖 Documentation
+## 📖 Documentation (*coming soon*)
 
 - [Spec Overview](docs/spec.md)
 - [Component Definitions](docs/components.md)
-- [Generators](docs/generators.md) *(Coming soon)*
-
----
+- [Generators](docs/generators.md)
 
 ## 💬 Join the Discussion
 
@@ -165,13 +120,9 @@ Have ideas? Found a limitation? Want to contribute a generator or template?
 
 → Open an issue or start a discussion!
 
----
-
 ## 📝 License
 
 MIT
-
----
 
 ## 🔮 Future Plans
 
